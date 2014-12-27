@@ -11,6 +11,8 @@ var PubSub = {
   }
 };
 
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var BidForm = React.createClass({
   getInitialState: function() {
     return { leadingAmount: 0, fieldValue: 100 };
@@ -113,7 +115,9 @@ var BidTable = React.createClass({
 
     return <div>
       <table className="bids">
-        {rows}
+        <ReactCSSTransitionGroup transitionName="example" component="tbody">
+          {rows}
+        </ReactCSSTransitionGroup>
         {showAllLink}
       </table>
     </div>;
