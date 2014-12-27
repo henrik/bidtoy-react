@@ -1,21 +1,21 @@
-a {
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-table.bids {
+.bids {
   margin-top: 2em;
   min-width: 300px;
 }
 
-.bid-buyer span {
+.bids td {
+  border: 0 solid #fff;
+  border-width: 1px 0;
+}
+
+.bidder-pill {
+  padding: 2px 5px;
 }
 
 .bid-amount { color: red; }
 .bid-amount.reserve-met { color: green; }
 
-td.show-all-bids {
+.show-all-bids {
   text-align: center;
 }
 
@@ -24,6 +24,6 @@ td.show-all-bids {
   transition: opacity .5s ease-in;
 }
 
-.example-enter.example-enter-active {
+.example-enter-active {
   opacity: 1;
 }

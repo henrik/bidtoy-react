@@ -90,8 +90,8 @@ var BidRow = React.createClass({
 
   render: function() {
     return <tr>
-      <td className="bid-buyer">
-        <span style={ { background: this.color() } }>{this.props.bid.buyer}</span>
+      <td>
+        <span className="bidder-pill" style={ { background: this.color() } }>{this.props.bid.buyer}</span>
       </td>
       <td className="bid-time">{this.props.bid.time}</td>
       <td className={this.reserveClasses()}>{formatNumber(this.props.bid.amount)}</td>
