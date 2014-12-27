@@ -1,4 +1,5 @@
 const COLORS = [ "_", "powderblue", "chartreuse", "yellow", "pink", "#eee" ];
+const TRUNCATE_AT = 3;
 
 var PubSub = {
   subs: [],
@@ -68,7 +69,10 @@ var BidRow = React.createClass({
 
 var BidTable = React.createClass({
   getInitialState: function() {
-    return { bids: [] };
+    return {
+      truncationEnabled: true,
+      bids: []
+    };
   },
 
   componentDidMount: function() {
@@ -83,14 +87,34 @@ var BidTable = React.createClass({
     });
   },
 
+  showAll: function(e) {
+    e.preventDefault();
+    this.setState({ truncationEnabled: false });
+  },
+
   render: function() {
-    rows = this.state.bids.map(function(bid) {
+    var bids = this.state.bids;
+
+    bids = this.state.truncationEnabled ? bids.slice(0, TRUNCATE_AT) : bids;
+
+    var rows = bids.map(function(bid) {
       return <BidRow key={bid.id} bid={bid} />
     });
+
+    var showAllLink = this.state.truncationEnabled && (
+      <tr>
+        <td className="show-all-bids" colSpan="3">
+          <a href="#" onClick={this.showAll}>
+            Show all {this.state.bids.length} bids
+          </a>
+        </td>
+      </tr>
+    );
 
     return <div>
       <table className="bids">
         {rows}
+        {showAllLink}
       </table>
     </div>;
   }
