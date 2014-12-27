@@ -73,7 +73,7 @@ var BidForm = React.createClass({
 
 var BidRow = React.createClass({
   color: function() {
-    return { background: COLORS[this.props.bid.buyer] };
+    return COLORS[this.props.bid.buyer];
   },
 
   reserveClasses: function() {
@@ -86,7 +86,7 @@ var BidRow = React.createClass({
   render: function() {
     return <tr>
       <td className="bid-buyer">
-        <span style={this.color()}>{this.props.bid.buyer}</span>
+        <span style={ { background: this.color() } }>{this.props.bid.buyer}</span>
       </td>
       <td className="bid-time">{this.props.bid.time}</td>
       <td className={this.reserveClasses()}>{this.props.bid.amount}</td>
