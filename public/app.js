@@ -29,10 +29,6 @@ var BidForm = React.createClass({
     });
   },
 
-  getInitialState: function() {
-    return { leadingAmount: 0 };
-  },
-
   nextAmount: function() {
     return this.state.leadingAmount + BID_STEP;
   },
@@ -54,6 +50,9 @@ var BidForm = React.createClass({
   },
 
   render: function() {
+    // Don't render until we know the amount.
+    if (!this.state) return <div>Loading…</div>;
+
     var buyerOpts = [1, 2, 3, 4, 5].map(function(n) { return <option key={n}>{n}</option>; });
 
     return <div>
@@ -138,7 +137,7 @@ var BidTable = React.createClass({
       return <BidRow key={bid.id} bid={bid} />
     });
 
-    var showAllLink = this.state.truncationEnabled && (
+    var showAllLink = this.state.truncationEnabled && this.state.bids.length > 0 && (
       <tr>
         <td className="show-all-bids" colSpan="3">
           <a href="#" onClick={this.showAll}>
