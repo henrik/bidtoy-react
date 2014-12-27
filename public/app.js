@@ -128,7 +128,7 @@ var BidTable = React.createClass({
 
     return <div>
       <table className="bids">
-        <ReactCSSTransitionGroup transitionName="example" component="tbody">
+        <ReactCSSTransitionGroup transitionName="example" transitionLeave={false} component="tbody">
           {rows}
         </ReactCSSTransitionGroup>
         {showAllLink}
