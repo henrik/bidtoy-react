@@ -96,12 +96,11 @@ var BidRow = React.createClass({
 
 var BidTable = React.createClass({
   componentDidMount: function() {
-    var that = this;
-
     this.fetchBids();
     // Run this method on an interval. Poor man's websocket.
     setInterval(this.fetchBids, 2000);
 
+    var that = this;
     PubSub.sub("bidPlaced", function(bid) {
       that.setState({ bids: [ bid ].concat(that.state.bids) });
     });
@@ -130,7 +129,6 @@ var BidTable = React.createClass({
 
   render: function() {
     var bids = this.state.bids;
-
     bids = this.state.truncationEnabled ? bids.slice(0, TRUNCATE_AT) : bids;
 
     var rows = bids.map(function(bid) {
