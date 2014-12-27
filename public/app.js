@@ -61,7 +61,8 @@ var BidForm = React.createClass({
         <p>
           Bid as buyer #
           <select ref="buyer">{buyerOpts}</select>
-          &nbsp;
+        </p>
+        <p>
           <input type="number" ref="amount" placeholder={this.nextAmount()} min={this.nextAmount()} step={BID_STEP} />
           &nbsp;
           <button>Place bid</button>
