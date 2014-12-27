@@ -16,6 +16,10 @@ var PubSub = {
   }
 };
 
+var formatNumber = function(number) {
+  return number.toFixed(0).replace(/\d(?=(\d{3})+$)/g, "$& ");
+}
+
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var BidForm = React.createClass({
@@ -56,14 +60,14 @@ var BidForm = React.createClass({
     var buyerOpts = [1, 2, 3, 4, 5].map(function(n) { return <option key={n}>{n}</option>; });
 
     return <div>
-      <p>Leading bid: {this.state.leadingAmount} SEK</p>
+      <p>Leading bid: {formatNumber(this.state.leadingAmount)} SEK</p>
       <form onSubmit={this.handleSubmit}>
         <p>
           Bid as buyer #
           <select ref="buyer">{buyerOpts}</select>
         </p>
         <p>
-          <input type="number" ref="amount" placeholder={this.nextAmount()} min={this.nextAmount()} step={BID_STEP} />
+          <input type="number" ref="amount" placeholder={formatNumber(this.nextAmount())} min={this.nextAmount()} step={BID_STEP} />
           &nbsp;
           <button>Place bid</button>
         </p>
@@ -90,7 +94,7 @@ var BidRow = React.createClass({
         <span style={ { background: this.color() } }>{this.props.bid.buyer}</span>
       </td>
       <td className="bid-time">{this.props.bid.time}</td>
-      <td className={this.reserveClasses()}>{this.props.bid.amount}</td>
+      <td className={this.reserveClasses()}>{formatNumber(this.props.bid.amount)}</td>
     </tr>;
   }
 });
