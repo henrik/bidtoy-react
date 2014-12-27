@@ -21,7 +21,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var BidForm = React.createClass({
   componentDidMount: function() {
     // Trying out using pubsub to sync the two components.
-    // Another alternative to look into: sharing state between owner/owned components, if possible.
+    // Another alternative to look into: an owner component passing its state into owned component props.
     var that = this;
     PubSub.sub("fetchedBids", function(bids) {
       var leadingAmount = bids[0].amount;
