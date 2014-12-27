@@ -28,12 +28,15 @@ var BidForm = React.createClass({
       that.setState({ leadingAmount: leadingAmount });
     });
   },
+
   getInitialState: function() {
     return { leadingAmount: 0 };
   },
+
   nextAmount: function() {
     return this.state.leadingAmount + BID_STEP;
   },
+
   handleSubmit: function(e) {
     e.preventDefault();
     var amountField = this.refs.amount.getDOMNode();
@@ -49,6 +52,7 @@ var BidForm = React.createClass({
       PubSub.pub("bidPlaced", data);
     });
   },
+
   render: function() {
     var buyerOpts = [1, 2, 3, 4, 5].map(function(n) { return <option key={n}>{n}</option>; });
 
@@ -92,6 +96,18 @@ var BidRow = React.createClass({
 });
 
 var BidTable = React.createClass({
+  componentDidMount: function() {
+    var that = this;
+
+    this.fetchBids();
+    // Run this method on an interval. Poor man's websocket.
+    setInterval(this.fetchBids, 2000);
+
+    PubSub.sub("bidPlaced", function(bid) {
+      that.setState({ bids: [ bid ].concat(that.state.bids) });
+    });
+  },
+
   getInitialState: function() {
     return {
       truncationEnabled: true,
@@ -105,18 +121,6 @@ var BidTable = React.createClass({
     $.ajax("/bids.json").success(function(data) {
       that.setState({ bids: data });
       PubSub.pub("fetchedBids", data);
-    });
-  },
-
-  componentDidMount: function() {
-    var that = this;
-
-    this.fetchBids();
-    // Run this method on an interval. Poor man's websocket.
-    setInterval(this.fetchBids, 2000);
-
-    PubSub.sub("bidPlaced", function(bid) {
-      that.setState({ bids: [ bid ].concat(that.state.bids) });
     });
   },
 
