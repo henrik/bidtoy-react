@@ -1,38 +1,56 @@
 const COLORS = [ "_", "powderblue", "chartreuse", "yellow", "pink", "#eee" ];
 const TRUNCATE_AT = 3;
+const BID_STEP = 50;
 
 var PubSub = {
-  subs: [],
-  sub: function(cb) {
-    this.subs.push(cb);
+  subs: {},
+  sub: function(name, cb) {
+    this.subs[name] = this._subsFor(name);
+    this.subs[name].push(cb);
   },
-  pub: function(e) {
-    this.subs.forEach(function(cb) { cb(e) });
+  pub: function(name, e) {
+    var subs = this._subsFor(name).forEach(function(cb) { cb(e) });
+  },
+  _subsFor: function(name) {
+    return this.subs[name] || [];
   }
 };
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var BidForm = React.createClass({
+  componentDidMount: function() {
+    // Trying out using pubsub to sync the two components.
+    // Another alternative to look into: sharing state between owner/owned components, if possible.
+    var that = this;
+    PubSub.sub("fetchedBids", function(bids) {
+      var leadingAmount = bids[0].amount;
+      that.setState({ leadingAmount: leadingAmount });
+    });
+  },
   getInitialState: function() {
-    return { leadingAmount: 0, fieldValue: 100 };
+    return { leadingAmount: 0 };
+  },
+  nextAmount: function() {
+    return this.state.leadingAmount + BID_STEP;
   },
   handleSubmit: function(e) {
     e.preventDefault();
     var amountField = this.refs.amount.getDOMNode();
     var buyerField = this.refs.buyer.getDOMNode();
-    var amount = amountField.value;
+    var amount = amountField.value || this.nextAmount();
     var buyer = buyerField.value;
 
     $.post("/bid.json", {
       amount: amount,
       buyer: buyer
     }).success(function(data) {
-      PubSub.pub(data);
+      amountField.value = "";
+      PubSub.pub("bidPlaced", data);
     });
   },
   render: function() {
-    var buyerOpts = [1, 2, 3, 4, 5].map(function(n) { return <option>{n}</option>; });
+    var buyerOpts = [1, 2, 3, 4, 5].map(function(n) { return <option key={n}>{n}</option>; });
 
     return <div>
       <p>Leading bid: {this.state.leadingAmount} SEK</p>
@@ -41,7 +59,7 @@ var BidForm = React.createClass({
           Bid as buyer #
           <select ref="buyer">{buyerOpts}</select>
           &nbsp;
-          <input type="number" ref="amount" defaultValue={this.state.fieldValue} />
+          <input type="number" ref="amount" placeholder={this.nextAmount()} min={this.nextAmount()} step={BID_STEP} />
           &nbsp;
           <button>Place bid</button>
         </p>
@@ -86,6 +104,7 @@ var BidTable = React.createClass({
 
     $.ajax("/bids.json").success(function(data) {
       that.setState({ bids: data });
+      PubSub.pub("fetchedBids", data);
     });
   },
 
@@ -96,7 +115,7 @@ var BidTable = React.createClass({
     // Run this method on an interval. Poor man's websocket.
     setInterval(this.fetchBids, 2000);
 
-    PubSub.sub(function(bid) {
+    PubSub.sub("bidPlaced", function(bid) {
       that.setState({ bids: [ bid ].concat(that.state.bids) });
     });
   },
