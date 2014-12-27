@@ -83,17 +83,17 @@ var BidRow = React.createClass({
 
   reserveClasses: function() {
     return React.addons.classSet({
-      "bid-amount": true,
-      "reserve-met": this.props.bid.reserve_met
+      "bid__amount": true,
+      "bid__amount--reserve-met": this.props.bid.reserve_met
     });
   },
 
   render: function() {
     return <tr>
       <td>
-        <span className="bidder-pill" style={ { background: this.color() } }>{this.props.bid.buyer}</span>
+        <span className="bid__bidder" style={ { background: this.color() } }>{this.props.bid.buyer}</span>
       </td>
-      <td className="bid-time">{this.props.bid.time}</td>
+      <td>{this.props.bid.time}</td>
       <td className={this.reserveClasses()}>{formatNumber(this.props.bid.amount)}</td>
     </tr>;
   }

@@ -8,12 +8,12 @@
   border-width: 1px 0;
 }
 
-.bidder-pill {
+.bid__bidder {
   padding: 2px 5px;
 }
 
-.bid-amount { color: red; }
-.bid-amount.reserve-met { color: green; }
+.bid__amount { color: red; }
+.bid__amount--reserve-met { color: green; }
 
 .show-all-bids {
   text-align: center;
