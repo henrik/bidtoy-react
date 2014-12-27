@@ -3,7 +3,7 @@ require "sinatra/json"
 require "slim"
 require "json"
 
-Slim::Engine.default_options[:pretty] = true
+Slim::Engine.options[:pretty] = true
 
 # Store data globally. Should live as long as the server does.
 module Database
@@ -36,7 +36,6 @@ get "/bids.json" do
 end
 
 post "/bid.json" do
-  data = JSON.parse(request.body.read)
-  Database.add_bid(amount: data["amount"].to_i, buyer: data["buyer"].to_i)
+  Database.add_bid(amount: params["amount"].to_i, buyer: params["buyer"].to_i)
   json(Database.bids.first)
 end

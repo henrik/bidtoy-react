@@ -3,15 +3,13 @@ html
   head
     title React.js toy
     link rel="stylesheet" href="/style.css"
+    script src="/JSXTransformer.js"
+    script src="/react-with-addons.js"
+    script src="http://code.jquery.com/jquery-1.10.0.min.js"
 
   body
 
-    p Leading bid: TODO SEK
+    #bid-form
+    #bid-table
 
-    form
-      input type="number" placeholder="{{nextBidAmount | number}}" min="{{nextBidAmount}}" ng-model="formBidAmount"
-      button Place bid
-
-    table.bids
-
-    script src="/app.js"
+    script type="text/jsx" src="/app.js"
