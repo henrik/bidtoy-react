@@ -137,7 +137,7 @@ var BidTable = React.createClass({
       return <BidRow key={bid.id} bid={bid} />
     });
 
-    var showAllLink = this.state.truncationEnabled && this.state.bids.length > 0 && (
+    var showAllLink = this.state.truncationEnabled && this.state.bids.length > TRUNCATE_AT && (
       <tr>
         <td className="show-all-bids" colSpan="3">
           <a href="#" onClick={this.showAll}>
