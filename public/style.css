@@ -1,0 +1,20 @@
+a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+table.bids {
+  margin-top: 2em;
+  min-width: 300px;
+}
+
+.bid-buyer span {
+}
+
+.bid-amount { color: red; }
+.bid-amount.reserve-met { color: green; }
+
+td.show-all-bids {
+  text-align: center;
+}

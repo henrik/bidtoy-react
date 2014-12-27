@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title React.js toy
+    link rel="stylesheet" href="/style.css"
+
+  body
+
+    p Leading bid: TODO SEK
+
+    form
+      input type="number" placeholder="{{nextBidAmount | number}}" min="{{nextBidAmount}}" ng-model="formBidAmount"
+      button Place bid
+
+    table.bids
+
+    script src="/app.js"
