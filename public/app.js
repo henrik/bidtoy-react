@@ -32,15 +32,14 @@ var BidForm = React.createClass({
     });
   },
   render: function() {
+    var buyerOpts = [1, 2, 3, 4, 5].map(function(n) { return <option>{n}</option>; });
+
     return <div>
       <p>Leading bid: {this.state.leadingAmount} SEK</p>
       <form onSubmit={this.handleSubmit}>
         <p>
           Bid as buyer #
-          <select ref="buyer">
-            <option>1</option>
-            <option>2</option>
-          </select>
+          <select ref="buyer">{buyerOpts}</select>
           &nbsp;
           <input type="number" ref="amount" defaultValue={this.state.fieldValue} />
           &nbsp;
