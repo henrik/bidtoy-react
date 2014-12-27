@@ -20,13 +20,13 @@ var BidForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var amountField = this.refs.amount.getDOMNode();
-    var bidderField = this.refs.bidder.getDOMNode();
+    var buyerField = this.refs.buyer.getDOMNode();
     var amount = amountField.value;
-    var bidder = bidderField.value;
+    var buyer = buyerField.value;
 
     $.post("/bid.json", {
       amount: amount,
-      buyer: bidder
+      buyer: buyer
     }).success(function(data) {
       PubSub.pub(data);
     });
@@ -35,12 +35,17 @@ var BidForm = React.createClass({
     return <div>
       <p>Leading bid: {this.state.leadingAmount} SEK</p>
       <form onSubmit={this.handleSubmit}>
-        <select ref="bidder">
-          <option>1</option>
-          <option>2</option>
-        </select>
-        <input type="number" ref="amount" defaultValue={this.state.fieldValue} />
-        <button>Place bid</button>
+        <p>
+          Bid as buyer #
+          <select ref="buyer">
+            <option>1</option>
+            <option>2</option>
+          </select>
+          &nbsp;
+          <input type="number" ref="amount" defaultValue={this.state.fieldValue} />
+          &nbsp;
+          <button>Place bid</button>
+        </p>
       </form>
     </div>;
   }
