@@ -77,12 +77,20 @@ var BidTable = React.createClass({
     };
   },
 
-  componentDidMount: function() {
+  fetchBids: function() {
     var that = this;
 
     $.ajax("/bids.json").success(function(data) {
       that.setState({ bids: data });
     });
+  },
+
+  componentDidMount: function() {
+    var that = this;
+
+    this.fetchBids();
+    // Run this method on an interval. Poor man's websocket.
+    setInterval(this.fetchBids, 2000);
 
     PubSub.sub(function(bid) {
       that.setState({ bids: [ bid ].concat(that.state.bids) });
