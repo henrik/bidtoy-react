@@ -82,4 +82,4 @@ window.BidForm = React.createClass
       )
     )
 
-React.render React.createElement(BidForm), document.getElementById("bid-form")
+React.render `<BidForm />`, document.getElementById("bid-form")
