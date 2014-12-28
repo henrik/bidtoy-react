@@ -58,29 +58,6 @@ var BidForm = React.createClass({
   }
 });
 
-var BidRow = React.createClass({
-  color: function() {
-    return COLORS[this.props.bid.buyer];
-  },
-
-  reserveClasses: function() {
-    return React.addons.classSet({
-      "bid__amount": true,
-      "bid__amount--reserve-met": this.props.bid.reserve_met
-    });
-  },
-
-  render: function() {
-    return <tr>
-      <td>
-        <span className="bid__bidder" style={ { background: this.color() } }>{this.props.bid.buyer}</span>
-      </td>
-      <td>{this.props.bid.time}</td>
-      <td className={this.reserveClasses()}>{formatNumber(this.props.bid.amount)}</td>
-    </tr>;
-  }
-});
-
 var BidTable = React.createClass({
   componentDidMount: function() {
     this.fetchBids();
