@@ -8,6 +8,7 @@ Also see [the Angular version](/henrik/bidtoy) (feature parity not guaranteed).
 
 ## TODO
 
+- [ ] Split up with e.g. require.js
 - [ ] Write tests
 - [ ] Try <https://github.com/kalasjocke/react-coffee-elements>
 - [ ] Try <https://github.com/mlmorg/react-hyperscript>
