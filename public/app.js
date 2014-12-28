@@ -2,24 +2,6 @@ const COLORS = [ "_", "powderblue", "chartreuse", "yellow", "pink", "#eee" ];
 const TRUNCATE_AT = 3;
 const BID_STEP = 50;
 
-var PubSub = {
-  subs: {},
-  sub: function(name, cb) {
-    this.subs[name] = this._subsFor(name);
-    this.subs[name].push(cb);
-  },
-  pub: function(name, e) {
-    var subs = this._subsFor(name).forEach(function(cb) { cb(e) });
-  },
-  _subsFor: function(name) {
-    return this.subs[name] || [];
-  }
-};
-
-var formatNumber = function(number) {
-  return number.toFixed(0).replace(/\d(?=(\d{3})+$)/g, "$& ");
-}
-
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var BidForm = React.createClass({

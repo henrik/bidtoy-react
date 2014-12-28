@@ -31,6 +31,10 @@ get "/" do
   slim :index
 end
 
+get "/coffee.js" do
+  coffee :coffee
+end
+
 get "/bids.json" do
   json Database.bids
 end
