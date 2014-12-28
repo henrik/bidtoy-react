@@ -23,7 +23,9 @@ var BidTable = React.createClass({
   fetchBids: function() {
     var that = this;
 
-    $.ajax("/bids.json").success(function(data) {
+    $.get(this.props.source, function(data) {
+      if (!that.isMounted()) return;
+
       that.setState({ bids: data });
       PubSub.pub("fetchedBids", data);
     });
@@ -64,6 +66,6 @@ var BidTable = React.createClass({
 });
 
 React.render(
-  <BidTable />,
+  <BidTable source="/bids.json" />,
   document.getElementById("bid-table")
 );
