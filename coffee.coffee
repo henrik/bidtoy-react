@@ -4,24 +4,24 @@ BID_STEP = 50
 window.PubSub =
   subs: {}
   sub: (name, cb) ->
-    this.subs[name] = this._subsFor(name)
-    this.subs[name].push(cb)
+    @subs[name] = @_subsFor(name)
+    @subs[name].push(cb)
   pub: (name, e) ->
-    this._subsFor(name).forEach((cb) -> cb(e))
+    @_subsFor(name).forEach((cb) -> cb(e))
   _subsFor: (name) ->
-    this.subs[name] || []
+    @subs[name] || []
 
 window.formatNumber = (number) ->
   number.toFixed(0).replace(/\d(?=(\d{3})+$)/g, "$& ")
 
 window.BidRow = React.createClass
   color: ->
-    COLORS[this.props.bid.buyer]
+    COLORS[@props.bid.buyer]
 
   reserveClasses: ->
     React.addons.classSet({
       "bid__amount": true,
-      "bid__amount--reserve-met": this.props.bid.reserve_met
+      "bid__amount--reserve-met": @props.bid.reserve_met
     })
 
   render: ->
