@@ -6,6 +6,12 @@ Only intended for learning and experimentation; not aiming for production qualit
 
 Also see [the Angular version](/henrik/bidtoy) (feature parity not guaranteed).
 
+## TODO
+
+- [ ] Write tests
+- [ ] Try <https://github.com/kalasjocke/react-coffee-elements>
+- [ ] Try <https://github.com/mlmorg/react-hyperscript>
+
 ## Development
 
 Uses Sinatra (a Ruby framework).
